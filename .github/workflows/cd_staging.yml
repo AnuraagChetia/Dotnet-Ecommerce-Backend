@@ -1,0 +1,16 @@
+name: Deploy to staging
+
+on:
+  push:
+    branch: [staging]
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      steps: -run |
+        echo "${{secrets.SSH_PRIVATE_KEY}}" &> ~/ssh_key
+        mkdir -p /home/runner/.ssh
+        ls /home/runner/.ssh
+        touch /home/runner/.ssh/known_hosts
+        echo "${{secrets.KNOWN_HOSTS}}" &> /home/runner/.ssh/known_hosts
+        chmod 700 /home/runner/.ssh
+        ssh -i ~/ssh_key root@IP_ADDRESS -t "cd ecommerce-app/ && git pull origin main
