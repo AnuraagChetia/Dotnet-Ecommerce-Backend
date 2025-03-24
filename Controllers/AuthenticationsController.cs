@@ -40,12 +40,20 @@ namespace E_commerce.Controllers
             }
 
             user.Password = _passwordService.HashPassword(user.Password);
-            
+
             await _dbContext.Users.AddAsync(new UserModel { Name = user.Name, Email = user.Email, Password = user.Password, Role = user.Role, PhoneNumber = user.PhoneNumber });
 
             await _dbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Signup), new { id = user.Id }, user);
+            var response = new SignupResponseDto
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Role = user.Role,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return CreatedAtAction(nameof(Signup), new { id = user.Id }, response);
         }
         /**
             @notice This is the controller for login functionality.

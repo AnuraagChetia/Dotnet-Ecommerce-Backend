@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using E_commerce.Data;
 using E_commerce.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,10 +12,28 @@ var secretKey = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
 var connString = builder.Configuration.GetConnectionString("Ecommerce");
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // Allow Angular frontend
+                  .AllowAnyMethod()  // Allow GET, POST, PUT, DELETE
+                  .AllowAnyHeader()  // Allow all headers
+                  .AllowCredentials(); // Allow cookies if needed
+        });
+});
 builder.Services.AddSqlite<EcommerceContext>(connString);
 builder.Services.AddControllers();
 builder.Services.AddScoped<PasswordService>();
 builder.Services.AddSingleton<PaymentGatewayService>();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddAuthentication(options => // Without this, ASP.NET Core won’t know how to handle authentication and will allow any request to access protected endpoints.
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Specifies that JWT Bearer authentication is used as the default authentication method.
@@ -53,6 +72,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAngularApp");
 
 await app.MigrateDbAsync();
 

@@ -154,3 +154,4 @@ C:\Users\anuraag.anuj.chetia\Documents\E-Commerce ASP.NET MVC Core Project\E-com
 C:\Users\anuraag.anuj.chetia\Documents\E-Commerce ASP.NET MVC Core Project\E-commerce\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\Users\anuraag.anuj.chetia\Documents\E-Commerce ASP.NET MVC Core Project\E-commerce\bin\Debug\net9.0\BouncyCastle.Crypto.dll
 C:\Users\anuraag.anuj.chetia\Documents\E-Commerce ASP.NET MVC Core Project\E-commerce\bin\Debug\net9.0\Razorpay.dll
+C:\Users\anuraag.anuj.chetia\Documents\E-Commerce ASP.NET MVC Core Project\E-commerce\obj\Debug\net9.0\E-commerce.sourcelink.json
