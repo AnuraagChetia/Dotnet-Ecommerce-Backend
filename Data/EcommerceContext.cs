@@ -19,7 +19,8 @@ public class EcommerceContext(DbContextOptions<EcommerceContext> options) : DbCo
        .Property(u => u.Role)
        .HasConversion<string>(); // Stores enum as a string
 
-
+        modelBuilder.Entity<UserModel>()
+        .Property(u => u.AccountStatus).HasConversion<string>(); // Stores enum as a string
     }
 
 }
